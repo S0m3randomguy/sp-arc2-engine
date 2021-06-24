@@ -24,13 +24,15 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . f 1 6 6 6 6 6 f . . . . 
         . . . . . f f f f f f f . . . . 
         `)
-    if (arrowUp.tileKindAt(TileDirection.Center, assets.tile`transparency16`)) {
+    if (arrowUp.tileKindAt(TileDirection.Center, assets.tile`myTile2`)) {
         healthBar.value += 2
         score += -50
+        misses += 1
     } else if (arrowUp.tileKindAt(TileDirection.Center, assets.tile`myTile1`)) {
         score += 200
-        tiles.setTileAt(tiles.getTileLocation(8, arrowUp.y / 16), assets.tile`transparency16`)
+        tiles.setTileAt(tiles.getTileLocation(8, arrowUp.y / 16), assets.tile`myTile2`)
         healthBar.value += -2
+        notesHit += 1
     }
 })
 controller.down.onEvent(ControllerButtonEvent.Released, function () {
@@ -54,10 +56,11 @@ controller.down.onEvent(ControllerButtonEvent.Released, function () {
         `)
 })
 scene.onOverlapTile(SpriteKind.barrier, assets.tile`myTile0`, function (sprite, location) {
-    tiles.setTileAt(location, assets.tile`transparency16`)
+    tiles.setTileAt(location, assets.tile`myTile2`)
     score += -50
     healthBar.value += 2
     notesPassed += 1
+    misses += 1
 })
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     arrowLeft.setImage(img`
@@ -78,13 +81,15 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . f f a a f . . . . . . . 
         . . . . . . f f f . . . . . . . 
         `)
-    if (arrowLeft.tileKindAt(TileDirection.Center, assets.tile`transparency16`)) {
+    if (arrowLeft.tileKindAt(TileDirection.Center, assets.tile`myTile2`)) {
         healthBar.value += 2
         score += -50
+        misses += 1
     } else if (arrowLeft.tileKindAt(TileDirection.Center, assets.tile`myTile0`)) {
         score += 200
-        tiles.setTileAt(tiles.getTileLocation(6, arrowLeft.y / 16), assets.tile`transparency16`)
+        tiles.setTileAt(tiles.getTileLocation(6, arrowLeft.y / 16), assets.tile`myTile2`)
         healthBar.value += -2
+        notesHit += 1
     }
 })
 controller.right.onEvent(ControllerButtonEvent.Released, function () {
@@ -128,10 +133,11 @@ controller.left.onEvent(ControllerButtonEvent.Released, function () {
         `)
 })
 scene.onOverlapTile(SpriteKind.barrier, assets.tile`myTile3`, function (sprite, location) {
-    tiles.setTileAt(location, assets.tile`transparency16`)
+    tiles.setTileAt(location, assets.tile`myTile2`)
     score += -50
     healthBar.value += 2
     notesPassed += 1
+    misses += 1
 })
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     arrowRight.setImage(img`
@@ -152,13 +158,15 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . . . . f 4 4 f f . . . . 
         . . . . . . . f f f . . . . . . 
         `)
-    if (arrowRight.tileKindAt(TileDirection.Center, assets.tile`transparency16`)) {
+    if (arrowRight.tileKindAt(TileDirection.Center, assets.tile`myTile2`)) {
         healthBar.value += 2
         score += -50
+        misses += 1
     } else if (arrowRight.tileKindAt(TileDirection.Center, assets.tile`myTile3`)) {
         score += 200
-        tiles.setTileAt(tiles.getTileLocation(9, arrowRight.y / 16), assets.tile`transparency16`)
+        tiles.setTileAt(tiles.getTileLocation(9, arrowRight.y / 16), assets.tile`myTile2`)
         healthBar.value += -2
+        notesHit += 1
     }
 })
 controller.up.onEvent(ControllerButtonEvent.Released, function () {
@@ -200,34 +208,40 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . . f 6 6 6 6 f . . . . . 
         . . . . . . f f f f . . . . . . 
         `)
-    if (arrowDown.tileKindAt(TileDirection.Center, assets.tile`transparency16`)) {
+    if (arrowDown.tileKindAt(TileDirection.Center, assets.tile`myTile2`)) {
         healthBar.value += 2
         score += -50
+        misses += 1
     } else if (arrowDown.tileKindAt(TileDirection.Center, assets.tile`myTile`)) {
         score += 200
-        tiles.setTileAt(tiles.getTileLocation(7, arrowDown.y / 16), assets.tile`transparency16`)
+        tiles.setTileAt(tiles.getTileLocation(7, arrowDown.y / 16), assets.tile`myTile2`)
         healthBar.value += -2
+        notesHit += 1
     }
 })
 scene.onOverlapTile(SpriteKind.barrier, assets.tile`myTile1`, function (sprite, location) {
-    tiles.setTileAt(location, assets.tile`transparency16`)
+    tiles.setTileAt(location, assets.tile`myTile2`)
     score += -50
     healthBar.value += 2
     notesPassed += 1
+    misses += 1
 })
 scene.onOverlapTile(SpriteKind.barrier, assets.tile`myTile`, function (sprite, location) {
-    tiles.setTileAt(location, assets.tile`transparency16`)
+    tiles.setTileAt(location, assets.tile`myTile2`)
     score += -50
     healthBar.value += 2
     notesPassed += 1
+    misses += 1
 })
 statusbars.onStatusReached(StatusBarKind.Health, statusbars.StatusComparison.EQ, statusbars.ComparisonType.Percentage, 100, function (status) {
     pause(200)
     game.over(false)
 })
-let accuracyCounter = ""
+let missesCounter = ""
 let scoreCounter = ""
 let arrowPos = 0
+let notesCurrentTotal = 0
+let notesHit = 0
 let arrowRight: Sprite = null
 let arrowUp: Sprite = null
 let arrowDown: Sprite = null
@@ -357,12 +371,12 @@ scene.setBackgroundImage(img`
     `)
 let songRunning = 1
 let score = 0
+let misses = 0
 let notesPassed = 0
-let accuracy = 0
 healthBar = statusbars.create(150, 4, StatusBarKind.Health)
 healthBar.setColor(2, 7)
 healthBar.max = 120
-healthBar.value = 50
+healthBar.value = 60
 healthBar.setBarBorder(1, 15)
 healthBar.positionDirection(CollisionDirection.Bottom)
 healthBar.y = 115
@@ -474,26 +488,18 @@ late.setVelocity(0, 90)
 let scoreCounterDisplay = textsprite.create("Score:0")
 scoreCounterDisplay.setPosition(25, 115)
 scoreCounterDisplay.setVelocity(0, 90)
-let accuracyCounterDisplay = textsprite.create("Accuracy:FC")
-accuracyCounterDisplay.setPosition(100, 115)
-accuracyCounterDisplay.setVelocity(0, 90)
+let missesCounterDisplay = textsprite.create("Misses:0")
+missesCounterDisplay.setPosition(83, 115)
+missesCounterDisplay.setVelocity(0, 90)
 game.onUpdateInterval(20, function () {
+    notesCurrentTotal = notesPassed + notesHit
     arrowPos = late.y
     scene.centerCameraAt(0, arrowPos + 70)
-    accuracy = Math.round(score / (notesPassed * 200) * 100)
     scoreCounter = convertToText(score)
-    accuracyCounter = convertToText(accuracy)
     scoreCounterDisplay.setText("|Score:" + scoreCounter + "|")
-    if (notesPassed == 0) {
-        accuracy = 0
-    }
-    if (accuracy == 0) {
-        accuracyCounterDisplay.setText("Accuracy:FC|")
-    } else {
-        accuracyCounterDisplay.setText("Accuracy:" + accuracyCounter + "%" + "|")
-    }
-    accuracyCounterDisplay.setPosition(33 + scoreCounterDisplay.x * 2, scoreCounterDisplay.y)
-    accuracyCounterDisplay.setVelocity(0, 90)
+    missesCounter = convertToText(misses)
+    missesCounterDisplay.setText("Missed:" + missesCounter + "|")
+    missesCounterDisplay.x = scoreCounterDisplay.width + (missesCounterDisplay.width - missesCounterDisplay.width / 2.5)
 })
 forever(function () {
     pause(230)
