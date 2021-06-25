@@ -470,12 +470,12 @@ arrowRight = sprites.create(img`
     . . . . . . . f b b f f . . . . 
     . . . . . . . f f f . . . . . . 
     `, SpriteKind.RightArrow)
+tiles.setTilemap(tilemap`level1`)
 arrowLeft.setPosition(104, 31)
 arrowDown.setPosition(120, 31)
 arrowUp.setPosition(136, 31)
 arrowRight.setPosition(152, 31)
 late.setPosition(128, 0)
-tiles.setTilemap(tilemap`level1`)
 arrowLeft.z = -100
 arrowDown.z = -100
 arrowUp.z = -100
@@ -492,6 +492,9 @@ let missesCounterDisplay = textsprite.create("Misses:0")
 missesCounterDisplay.setPosition(83, 115)
 missesCounterDisplay.setVelocity(0, 90)
 game.onUpdateInterval(20, function () {
+    if (healthBar.value > 60) {
+        healthBar.value = 60
+    }
     notesCurrentTotal = notesPassed + notesHit
     arrowPos = late.y
     scene.centerCameraAt(0, arrowPos + 70)
@@ -499,7 +502,13 @@ game.onUpdateInterval(20, function () {
     scoreCounterDisplay.setText("|Score:" + scoreCounter + "|")
     missesCounter = convertToText(misses)
     missesCounterDisplay.setText("Missed:" + missesCounter + "|")
-    missesCounterDisplay.x = scoreCounterDisplay.width + (missesCounterDisplay.width - missesCounterDisplay.width / 2.5)
+    if (misses < 10) {
+        missesCounterDisplay.x = scoreCounterDisplay.width + 32
+    } else if (misses > 9 && misses < 100) {
+        missesCounterDisplay.x = scoreCounterDisplay.width + 35
+    } else if (misses > 99 && misses < 1000) {
+        missesCounterDisplay.x = scoreCounterDisplay.width + 38
+    }
 })
 forever(function () {
     pause(230)
