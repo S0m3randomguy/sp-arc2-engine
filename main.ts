@@ -492,9 +492,6 @@ let missesCounterDisplay = textsprite.create("Misses:0")
 missesCounterDisplay.setPosition(83, 115)
 missesCounterDisplay.setVelocity(0, 90)
 game.onUpdateInterval(20, function () {
-    if (healthBar.value > 60) {
-        healthBar.value = 60
-    }
     notesCurrentTotal = notesPassed + notesHit
     arrowPos = late.y
     scene.centerCameraAt(0, arrowPos + 70)
