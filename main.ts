@@ -140,10 +140,6 @@ function ReleaseLeft () {
             `)
     }
 }
-statusbars.onStatusReached(StatusBarKind.Health, statusbars.StatusComparison.EQ, statusbars.ComparisonType.Percentage, 0, function (status) {
-    pause(200)
-    game.over(false)
-})
 scene.onOverlapTile(SpriteKind.Barrier, assets.tile`myTile3`, function (sprite, location) {
     tiles.setTileAt(location, assets.tile`transparency16`)
     score += -50
@@ -152,6 +148,7 @@ scene.onOverlapTile(SpriteKind.Barrier, assets.tile`myTile3`, function (sprite, 
     misses += 1
 })
 function SongInitialization () {
+    let song = 0
     songRunning = 1
     healthBar = statusbars.create(150, 4, StatusBarKind.Health)
     healthBar.setColor(7, 2)
@@ -510,7 +507,8 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 function StartMenu () {
     levelPlaying = 0
-    blockMenu.showMenu(["Story mode", "Freeplay"], MenuStyle.List, MenuLocation.BottomHalf)
+    menu = 0
+    blockMenu.showMenu(["Story mode", "Freeplay", "Options", "Credits"], MenuStyle.List, MenuLocation.BottomHalf)
     blockMenu.setColors(1, 15)
 }
 controller.up.onEvent(ControllerButtonEvent.Released, function () {
@@ -633,15 +631,22 @@ function ReleaseUp () {
     }
 }
 blockMenu.onMenuOptionSelected(function (option, index) {
-    if (option == "Freeplay") {
-        blockMenu.showMenu(["test_0", "Back"], MenuStyle.List, MenuLocation.BottomHalf)
-    } else if (option == "Back") {
-        blockMenu.showMenu(["Story mode", "Freeplay"], MenuStyle.List, MenuLocation.BottomHalf)
-    } else if (option == "test_0") {
-        song = 1
-        blockMenu.setControlsEnabled(false)
-        blockMenu.closeMenu()
-        SongInitialization()
+    if (index == 0) {
+        if (menu == 0) {
+            game.splash("Not available yet", "Coming soon")
+        }
+    } else if (index == 1) {
+        if (menu == 0) {
+            blockMenu.showMenu(["test_0", "Back"], MenuStyle.List, MenuLocation.BottomHalf)
+        }
+    } else if (index == 2) {
+        if (menu == 0) {
+        	
+        }
+    } else if (index == 3) {
+        if (menu == 0) {
+        	
+        }
     }
 })
 scene.onOverlapTile(SpriteKind.Barrier, assets.tile`myTile1`, function (sprite, location) {
@@ -651,10 +656,12 @@ scene.onOverlapTile(SpriteKind.Barrier, assets.tile`myTile1`, function (sprite, 
     notesPassed += 1
     misses += 1
 })
+let statusHealth = 0
 let missesCounter = ""
 let scoreCounter = ""
 let arrowPos = 0
 let notesCurrentTotal = 0
+let menu = 0
 let missesCounterDisplay: TextSprite = null
 let scoreCounterDisplay: TextSprite = null
 let arrowRightP2: Sprite = null
@@ -665,7 +672,6 @@ let lateP2: Sprite = null
 let arrowUp: Sprite = null
 let late: Sprite = null
 let scrollSpeed = 0
-let song = 0
 let songRunning = 0
 let notesPassed = 0
 let arrowDown: Sprite = null
@@ -692,6 +698,11 @@ game.onUpdateInterval(20, function () {
             missesCounterDisplay.x = scoreCounterDisplay.width + 35
         } else if (misses > 99 && misses < 1000) {
             missesCounterDisplay.x = scoreCounterDisplay.width + 38
+        }
+        statusHealth = healthBar.value
+        if (statusHealth == 0) {
+            pause(200)
+            game.over(false)
         }
     }
 })
