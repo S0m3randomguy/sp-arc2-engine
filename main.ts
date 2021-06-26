@@ -148,8 +148,7 @@ scene.onOverlapTile(SpriteKind.Barrier, assets.tile`myTile3`, function (sprite, 
     misses += 1
 })
 function SongInitialization () {
-    let song = 0
-    songRunning = 1
+    songRunning = 0
     healthBar = statusbars.create(150, 4, StatusBarKind.Health)
     healthBar.setColor(7, 2)
     healthBar.max = 120
@@ -634,18 +633,28 @@ blockMenu.onMenuOptionSelected(function (option, index) {
     if (index == 0) {
         if (menu == 0) {
             game.splash("Not available yet", "Coming soon")
+        } else if (menu == 1) {
+            song = 1
+            levelPlaying = 1
+            blockMenu.setControlsEnabled(false)
+            blockMenu.closeMenu()
+            SongInitialization()
         }
     } else if (index == 1) {
         if (menu == 0) {
+            menu = 1
             blockMenu.showMenu(["test_0", "Back"], MenuStyle.List, MenuLocation.BottomHalf)
+        } else if (menu == 1) {
+            menu = 0
+            blockMenu.showMenu(["Story mode", "Freeplay", "Options", "Credits"], MenuStyle.List, MenuLocation.BottomHalf)
         }
     } else if (index == 2) {
         if (menu == 0) {
-        	
+            game.splash("Not available yet", "Coming soon")
         }
     } else if (index == 3) {
         if (menu == 0) {
-        	
+            game.splash("Not available yet", "Coming soon")
         }
     }
 })
@@ -672,6 +681,7 @@ let lateP2: Sprite = null
 let arrowUp: Sprite = null
 let late: Sprite = null
 let scrollSpeed = 0
+let song = 0
 let songRunning = 0
 let notesPassed = 0
 let arrowDown: Sprite = null
@@ -709,6 +719,44 @@ game.onUpdateInterval(20, function () {
 forever(function () {
     pause(230)
     if (songRunning == 1) {
-    	
+        music.playMelody("A4 - D4 F4 A4 - D4 F4 G4 A4 G4 F4 G4 - D4 F4", 280)
+        music.playMelody("A5 - D5 F5 A5 - D5 F5 G5 A5 G5 F5 G5 - D5 F5", 280)
+        music.playMelody("D5 - A4 G4 F4 - E4 - D4 - ", 280)
+        music.playMelody("D4 D4 D4 D4 D4 D4", 310)
+        music.playMelody("D6 - A5 G5 F5 - E5 - D5 - ", 280)
+        music.playMelody("D5 D5 D5 D5 D5 D5", 320)
+        music.playMelody("- F4", 280)
+        music.playMelody("- D4 D4 D4 D4 D4", 360)
+        music.playMelody("- D4 E4", 300)
+        music.playMelody("- C4 C4 C4 C4 C4", 360)
+        music.playMelody("- A4 G4 - G4 A4 A#4 A#4 A4 G4", 280)
+        music.playMelody("A4 A4 A4 A4 A4", 360)
+        music.playMelody("- F5", 280)
+        music.playMelody("- D5 D5 D5 D5 D5", 360)
+        music.playMelody("- D5 E5", 300)
+        music.playMelody("- C5 C5 C5 C5 C5 - - ", 360)
+        music.playMelody("- A5 G5 - G5 A5 A#5 A#5 A5 G5", 280)
+        music.playMelody("A5 A5 A5 A5 A5", 360)
+        music.playMelody("- A4 G4 F4 G4 - A4", 280)
+        music.playMelody("- - A4 G4 F4 G4 - A#4 - A4 - G4 - F4 - E4 - D4 - C4", 280)
+        music.playMelody("- G3 G3 G3 G3", 280)
+        music.playMelody("- A4 A4 F4 G4 A4 G4", 260)
+        music.playMelody("- G4 A4 G4 F4", 320)
+        music.playMelody("G4 A4 G4 -", 280)
+        music.playMelody("- A4 A4 F4 G4 A4 G4 F4", 280)
+        music.playMelody("F4 E4 F4 G4 A4 G4 F4 E4", 280)
+        music.playMelody("- A5 G5 F5 G5 - A5", 280)
+        music.playMelody("- - A5 G5 F5 G5 - A#5 - A5 - G5 - F5 - E5 - D5 - C5", 280)
+        music.playMelody("- G4 G4 G4 G4", 280)
+        music.playMelody("- A5 A5 F5 G5 A5 G5", 260)
+        music.playMelody("- G5 A5 G5 F5", 320)
+        music.playMelody("G5 A5 G5", 280)
+        music.playMelody("- A5 A5 F5 G5 A5 G5 F5", 280)
+        music.playMelody("A#5 A#5 A5 G5 A5 F5", 280)
+        music.playMelody("- A4 - D4 F4 A4 - D4 F4 G4 A4 G4 F4 G4 - G4", 280)
+        music.playMelody("- A5 - D5 F5 A5 - D5 F5 G5 A5 G5 F5 G5 - G5", 280)
+        music.playMelody("- - D5 - A4 G4 F4 - E4 - D4 - D4 - D4", 280)
+        music.playMelody("- - D6 - A5 G5 F5 - E5 - D5 - D5 - D5", 280)
+        songRunning = 0
     }
 })
