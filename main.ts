@@ -500,6 +500,10 @@ function SongInitialization () {
     missesCounterDisplay.setPosition(83, 115)
     missesCounterDisplay.setVelocity(0, scrollSpeed)
     levelPlaying = 1
+    pause(200)
+    if (weekWarningPopup == 1) {
+        game.splash("Week 1 is still not ready.", "Only DadBattle will be played")
+    }
 }
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     if (levelPlaying == 1) {
@@ -509,6 +513,7 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
 function StartMenu () {
     levelPlaying = 0
     menu = 0
+    weekWarningPopup = 0
     toggleDownscroll = "OFF"
     toggleFlashingMenu = "ON"
     toggleFPSCounter = "OFF"
@@ -661,6 +666,9 @@ blockMenu.onMenuOptionSelected(function (option, index) {
             game.splash("Not available", "Please play on Hard")
         } else if (menu == 5) {
             game.splash("Not available yet", "Coming soon")
+        } else if (menu == 6) {
+            difficulty = 1
+            game.splash("Not available", "Please play on Hard")
         }
     } else if (index == 1) {
         if (menu == 0) {
@@ -688,6 +696,9 @@ blockMenu.onMenuOptionSelected(function (option, index) {
         } else if (menu == 5) {
             menu = 6
             blockMenu.showMenu(["Easy", "Normal", "Hard", "Back"], MenuStyle.List, MenuLocation.BottomLeft)
+        } else if (menu == 6) {
+            difficulty = 2
+            game.splash("Not available", "Please play on Hard")
         }
     } else if (index == 2) {
         if (menu == 0) {
@@ -720,6 +731,14 @@ blockMenu.onMenuOptionSelected(function (option, index) {
             menu = 0
             blockMenu.showMenu(["Story mode", "Freeplay", "Options", "Credits"], MenuStyle.List, MenuLocation.BottomHalf)
             blockMenu.setSelectedIndex(0)
+        } else if (menu == 6) {
+            weekWarningPopup = 1
+            difficulty = 3
+            song = 1
+            levelPlaying = 1
+            blockMenu.setControlsEnabled(false)
+            blockMenu.closeMenu()
+            SongInitialization()
         }
     } else if (index == 3) {
         if (menu == 0) {
@@ -731,7 +750,9 @@ blockMenu.onMenuOptionSelected(function (option, index) {
             menu = 1
             blockMenu.showMenu(["test_0", "Back"], MenuStyle.List, MenuLocation.BottomHalf)
         } else if (menu == 6) {
-        	
+            menu = 5
+            blockMenu.showMenu(["Tutorial", "Week 1", "Back"], MenuStyle.List, MenuLocation.BottomHalf)
+            blockMenu.setSelectedIndex(1)
         }
     }
 })
@@ -751,6 +772,7 @@ let toggleFPSCounter = ""
 let toggleFlashingMenu = ""
 let toggleDownscroll = ""
 let menu = 0
+let weekWarningPopup = 0
 let missesCounterDisplay: TextSprite = null
 let scoreCounterDisplay: TextSprite = null
 let arrowRightP2: Sprite = null
