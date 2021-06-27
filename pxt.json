@@ -9,7 +9,9 @@
         "arcade-sprite-data": "github:microsoft/arcade-sprite-data#v0.1.0",
         "arcade-text": "github:microsoft/arcade-text#v1.3.0",
         "block-menu": "github:riknoll/arcade-custom-menu#v0.0.1",
-        "Stats": "github:UnsignedArduino/Stats#9102333e1ca6cbaf8a979ceb252274b2f09b9005"
+        "Stats": "github:UnsignedArduino/Stats#9102333e1ca6cbaf8a979ceb252274b2f09b9005",
+        "Color Fading": "github:jwunderl/pxt-color#v0.2.1",
+        "settings-blocks": "github:microsoft/pxt-settings-blocks#v1.0.0"
     },
     "files": [
         "main.blocks",

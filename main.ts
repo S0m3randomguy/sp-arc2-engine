@@ -59,7 +59,7 @@ function PressLeft () {
     if (arrowLeft.tileKindAt(TileDirection.Center, assets.tile`transparency16`)) {
         healthBar.value += -3
         score += -50
-        misses += 1
+        notesMissed += 1
     } else if (arrowLeft.tileKindAt(TileDirection.Center, assets.tile`myTile0`)) {
         score += 200
         tiles.setTileAt(tiles.getTileLocation(6, arrowLeft.y / 16), assets.tile`transparency16`)
@@ -89,7 +89,7 @@ function PressDown () {
     if (arrowDown.tileKindAt(TileDirection.Center, assets.tile`transparency16`)) {
         healthBar.value += -3
         score += -50
-        misses += 1
+        notesMissed += 1
     } else if (arrowDown.tileKindAt(TileDirection.Center, assets.tile`myTile`)) {
         score += 200
         tiles.setTileAt(tiles.getTileLocation(7, arrowDown.y / 16), assets.tile`transparency16`)
@@ -115,8 +115,8 @@ scene.onOverlapTile(SpriteKind.Barrier, assets.tile`myTile0`, function (sprite, 
     tiles.setTileAt(location, assets.tile`transparency16`)
     score += -50
     healthBar.value += -2
+    notesMissed += 1
     notesPassed += 1
-    misses += 1
 })
 function ReleaseLeft () {
     if (levelPlaying == 1) {
@@ -140,12 +140,15 @@ function ReleaseLeft () {
             `)
     }
 }
+scene.onOverlapTile(SpriteKind.BarrierP2, assets.tile`myTile`, function (sprite, location) {
+    tiles.setTileAt(location, assets.tile`transparency16`)
+})
 scene.onOverlapTile(SpriteKind.Barrier, assets.tile`myTile3`, function (sprite, location) {
     tiles.setTileAt(location, assets.tile`transparency16`)
     score += -50
     healthBar.value += -2
+    notesMissed += 1
     notesPassed += 1
-    misses += 1
 })
 function SongInitialization () {
     songRunning = 0
@@ -157,6 +160,7 @@ function SongInitialization () {
     healthBar.positionDirection(CollisionDirection.Bottom)
     healthBar.setStatusBarFlag(StatusBarFlag.InvertFillDirection, true)
     healthBar.y = 115
+    accuracyGradeSuffix = ""
     if (song == 1) {
         if (difficulty == 3) {
             scrollSpeed = 100
@@ -285,6 +289,7 @@ function SongInitialization () {
             tiles.setTilemap(tilemap`level1`)
         }
     }
+    notesPassed = 0
     late = sprites.create(img`
         ................................................................
         ................................................................
@@ -499,6 +504,9 @@ function SongInitialization () {
     missesCounterDisplay = textsprite.create("Misses:0")
     missesCounterDisplay.setPosition(83, 115)
     missesCounterDisplay.setVelocity(0, scrollSpeed)
+    accuracyGradeDisplay = textsprite.create("FC")
+    accuracyGradeDisplay.setPosition(118, 115)
+    accuracyGradeDisplay.setVelocity(0, scrollSpeed)
     levelPlaying = 1
     pause(200)
     if (weekWarningPopup == 1) {
@@ -510,6 +518,9 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
         PressRight()
     }
 })
+scene.onOverlapTile(SpriteKind.BarrierP2, assets.tile`myTile1`, function (sprite, location) {
+    tiles.setTileAt(location, assets.tile`transparency16`)
+})
 function StartMenu () {
     levelPlaying = 0
     menu = 0
@@ -517,6 +528,7 @@ function StartMenu () {
     toggleDownscroll = "OFF"
     toggleFlashingMenu = "ON"
     toggleFPSCounter = "OFF"
+    accuracyGrade = "FC"
     difficulty = 0
     blockMenu.showMenu(["Story mode", "Freeplay", "Options", "Credits"], MenuStyle.List, MenuLocation.BottomHalf)
     blockMenu.setColors(1, 15)
@@ -568,7 +580,7 @@ function PressRight () {
     if (arrowRight.tileKindAt(TileDirection.Center, assets.tile`transparency16`)) {
         healthBar.value += -3
         score += -50
-        misses += 1
+        notesMissed += 1
     } else if (arrowRight.tileKindAt(TileDirection.Center, assets.tile`myTile3`)) {
         score += 200
         tiles.setTileAt(tiles.getTileLocation(9, arrowRight.y / 16), assets.tile`transparency16`)
@@ -576,12 +588,15 @@ function PressRight () {
         notesHit += 1
     }
 }
+scene.onOverlapTile(SpriteKind.BarrierP2, assets.tile`myTile3`, function (sprite, location) {
+    tiles.setTileAt(location, assets.tile`transparency16`)
+})
 scene.onOverlapTile(SpriteKind.Barrier, assets.tile`myTile`, function (sprite, location) {
     tiles.setTileAt(location, assets.tile`transparency16`)
     score += -50
     healthBar.value += -2
+    notesMissed += 1
     notesPassed += 1
-    misses += 1
 })
 function PressUp () {
     arrowUp.setImage(img`
@@ -605,7 +620,7 @@ function PressUp () {
     if (arrowUp.tileKindAt(TileDirection.Center, assets.tile`transparency16`)) {
         healthBar.value += -3
         score += -50
-        misses += 1
+        notesMissed += 1
     } else if (arrowUp.tileKindAt(TileDirection.Center, assets.tile`myTile1`)) {
         score += 200
         tiles.setTileAt(tiles.getTileLocation(8, arrowUp.y / 16), assets.tile`transparency16`)
@@ -640,6 +655,9 @@ function ReleaseUp () {
             `)
     }
 }
+scene.onOverlapTile(SpriteKind.BarrierP2, assets.tile`myTile0`, function (sprite, location) {
+    tiles.setTileAt(location, assets.tile`transparency16`)
+})
 blockMenu.onMenuOptionSelected(function (option, index) {
     if (index == 0) {
         if (menu == 0) {
@@ -760,19 +778,22 @@ scene.onOverlapTile(SpriteKind.Barrier, assets.tile`myTile1`, function (sprite, 
     tiles.setTileAt(location, assets.tile`transparency16`)
     score += -50
     healthBar.value += -2
+    notesMissed += 1
     notesPassed += 1
-    misses += 1
 })
 let statusHealth = 0
 let missesCounter = ""
 let scoreCounter = ""
+let accuracy = 0
 let arrowPos = 0
 let notesCurrentTotal = 0
+let accuracyGrade = ""
 let toggleFPSCounter = ""
 let toggleFlashingMenu = ""
 let toggleDownscroll = ""
 let menu = 0
 let weekWarningPopup = 0
+let accuracyGradeDisplay: TextSprite = null
 let missesCounterDisplay: TextSprite = null
 let scoreCounterDisplay: TextSprite = null
 let arrowRightP2: Sprite = null
@@ -785,11 +806,12 @@ let late: Sprite = null
 let scrollSpeed = 0
 let difficulty = 0
 let song = 0
+let accuracyGradeSuffix = ""
 let songRunning = 0
 let notesPassed = 0
 let arrowDown: Sprite = null
 let notesHit = 0
-let misses = 0
+let notesMissed = 0
 let score = 0
 let healthBar: StatusBarSprite = null
 let arrowLeft: Sprite = null
@@ -801,16 +823,70 @@ game.onUpdateInterval(20, function () {
         notesCurrentTotal = notesPassed + notesHit
         arrowPos = late.y
         scene.centerCameraAt(0, arrowPos + 70)
+        if (notesCurrentTotal == 0 && notesMissed == 0) {
+            accuracy = 100
+            accuracyGrade = "FC"
+        } else {
+            accuracy = (notesHit - notesMissed / 2) / notesCurrentTotal * 100
+            if (accuracy == 100) {
+                accuracyGrade = "FC"
+                accuracyGradeSuffix = ""
+            } else if (accuracy >= 95 && accuracy < 100) {
+                accuracyGrade = "A"
+                accuracyGradeSuffix = "+"
+            } else if (accuracy >= 92 && accuracy < 95) {
+                accuracyGrade = "A"
+                accuracyGradeSuffix = ""
+            } else if (accuracy >= 90 && accuracy < 92) {
+                accuracyGrade = "A"
+                accuracyGradeSuffix = "-"
+            } else if (accuracy >= 85 && accuracy < 90) {
+                accuracyGrade = "B"
+                accuracyGradeSuffix = "+"
+            } else if (accuracy >= 82 && accuracy < 85) {
+                accuracyGrade = "B"
+                accuracyGradeSuffix = ""
+            } else if (accuracy >= 80 && accuracy < 82) {
+                accuracyGrade = "B"
+                accuracyGradeSuffix = "-"
+            } else if (accuracy >= 75 && accuracy < 80) {
+                accuracyGrade = "C"
+                accuracyGradeSuffix = "+"
+            } else if (accuracy >= 72 && accuracy < 75) {
+                accuracyGrade = "C"
+                accuracyGradeSuffix = ""
+            } else if (accuracy >= 70 && accuracy < 72) {
+                accuracyGrade = "C"
+                accuracyGradeSuffix = "-"
+            } else if (accuracy >= 65 && accuracy < 70) {
+                accuracyGrade = "D"
+                accuracyGradeSuffix = "+"
+            } else if (accuracy >= 62 && accuracy < 65) {
+                accuracyGrade = "D"
+                accuracyGradeSuffix = ""
+            } else if (accuracy >= 60 && accuracy < 62) {
+                accuracyGrade = "D"
+                accuracyGradeSuffix = "-"
+            } else {
+                accuracyGrade = "F"
+            }
+        }
         scoreCounter = convertToText(score)
         scoreCounterDisplay.setText("|Score:" + scoreCounter + "|")
-        missesCounter = convertToText(misses)
+        missesCounter = convertToText(notesMissed)
         missesCounterDisplay.setText("Missed:" + missesCounter + "|")
-        if (misses < 10) {
+        accuracyGradeDisplay.setText("" + accuracyGrade + accuracyGradeSuffix + "|")
+        if (notesMissed < 10) {
             missesCounterDisplay.x = scoreCounterDisplay.width + 32
-        } else if (misses > 9 && misses < 100) {
+        } else if (notesMissed > 9 && notesMissed < 100) {
             missesCounterDisplay.x = scoreCounterDisplay.width + 35
-        } else if (misses > 99 && misses < 1000) {
+        } else if (notesMissed > 99 && notesMissed < 1000) {
             missesCounterDisplay.x = scoreCounterDisplay.width + 38
+        }
+        if (accuracyGrade == "FC" || accuracyGradeSuffix != "") {
+            accuracyGradeDisplay.x = missesCounterDisplay.width + 70
+        } else {
+            accuracyGradeDisplay.x = missesCounterDisplay.width + 80
         }
         statusHealth = healthBar.value
         if (statusHealth == 0) {
