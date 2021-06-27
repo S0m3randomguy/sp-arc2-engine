@@ -638,26 +638,29 @@ function ReleaseUp () {
 blockMenu.onMenuOptionSelected(function (option, index) {
     if (index == 0) {
         if (menu == 0) {
-            game.splash("Not available yet", "Coming soon")
+            menu = 5
+            blockMenu.showMenu(["Tutorial", "Week 1", "Back"], MenuStyle.List, MenuLocation.BottomHalf)
         } else if (menu == 1) {
             menu = 4
             blockMenu.showMenu(["Easy", "Normal", "Hard", "Back"], MenuStyle.List, MenuLocation.BottomLeft)
         } else if (menu == 2) {
             menu = 3
-            blockMenu.showMenu(["Downscroll: " + toggleDownscroll, "Flashing menu: " + "ON", "FPS Counter: " + toggleFPSCounter, "Back"], MenuStyle.List, MenuLocation.BottomHalf)
+            blockMenu.showMenu(["Downscroll: " + toggleDownscroll, "Flashing menu: " + toggleFlashingMenu, "FPS Counter: " + toggleFPSCounter, "Back"], MenuStyle.List, MenuLocation.BottomHalf)
         } else if (menu == 3) {
             if (toggleDownscroll == "OFF") {
                 toggleDownscroll = "ON"
-                blockMenu.showMenu(["Downscroll: " + toggleDownscroll, "Flashing menu: " + "ON", "FPS Counter: " + toggleFPSCounter, "Back"], MenuStyle.List, MenuLocation.BottomHalf)
+                blockMenu.showMenu(["Downscroll: " + toggleDownscroll, "Flashing menu: " + toggleFlashingMenu, "FPS Counter: " + toggleFPSCounter, "Back"], MenuStyle.List, MenuLocation.BottomHalf)
                 blockMenu.setSelectedIndex(0)
             } else if (toggleDownscroll == "ON") {
                 toggleDownscroll = "OFF"
-                blockMenu.showMenu(["Downscroll: " + toggleDownscroll, "Flashing menu: " + "ON", "FPS Counter: " + toggleFPSCounter, "Back"], MenuStyle.List, MenuLocation.BottomHalf)
+                blockMenu.showMenu(["Downscroll: " + toggleDownscroll, "Flashing menu: " + toggleFlashingMenu, "FPS Counter: " + toggleFPSCounter, "Back"], MenuStyle.List, MenuLocation.BottomHalf)
                 blockMenu.setSelectedIndex(0)
             }
         } else if (menu == 4) {
             difficulty = 1
             game.splash("Not available", "Please play on Hard")
+        } else if (menu == 5) {
+            game.splash("Not available yet", "Coming soon")
         }
     } else if (index == 1) {
         if (menu == 0) {
@@ -666,6 +669,7 @@ blockMenu.onMenuOptionSelected(function (option, index) {
         } else if (menu == 1) {
             menu = 0
             blockMenu.showMenu(["Story mode", "Freeplay", "Options", "Credits"], MenuStyle.List, MenuLocation.BottomHalf)
+            blockMenu.setSelectedIndex(1)
         } else if (menu == 2) {
             game.splash("Not available yet", "Coming soon")
         } else if (menu == 3) {
@@ -681,6 +685,9 @@ blockMenu.onMenuOptionSelected(function (option, index) {
         } else if (menu == 4) {
             difficulty = 2
             game.splash("Not available", "Please play on Hard")
+        } else if (menu == 5) {
+            menu = 6
+            blockMenu.showMenu(["Easy", "Normal", "Hard", "Back"], MenuStyle.List, MenuLocation.BottomLeft)
         }
     } else if (index == 2) {
         if (menu == 0) {
@@ -689,6 +696,7 @@ blockMenu.onMenuOptionSelected(function (option, index) {
         } else if (menu == 2) {
             menu = 0
             blockMenu.showMenu(["Story mode", "Freeplay", "Options", "Credits"], MenuStyle.List, MenuLocation.BottomHalf)
+            blockMenu.setSelectedIndex(2)
         } else if (menu == 3) {
             if (toggleFPSCounter == "OFF") {
                 toggleFPSCounter = "ON"
@@ -708,6 +716,10 @@ blockMenu.onMenuOptionSelected(function (option, index) {
             blockMenu.setControlsEnabled(false)
             blockMenu.closeMenu()
             SongInitialization()
+        } else if (menu == 5) {
+            menu = 0
+            blockMenu.showMenu(["Story mode", "Freeplay", "Options", "Credits"], MenuStyle.List, MenuLocation.BottomHalf)
+            blockMenu.setSelectedIndex(0)
         }
     } else if (index == 3) {
         if (menu == 0) {
@@ -718,6 +730,8 @@ blockMenu.onMenuOptionSelected(function (option, index) {
         } else if (menu == 4) {
             menu = 1
             blockMenu.showMenu(["test_0", "Back"], MenuStyle.List, MenuLocation.BottomHalf)
+        } else if (menu == 6) {
+        	
         }
     }
 })
