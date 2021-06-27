@@ -502,7 +502,7 @@ function SongInitialization () {
     levelPlaying = 1
     pause(200)
     if (weekWarningPopup == 1) {
-        game.splash("Week 1 is still not ready.", "Only DadBattle will be played")
+        game.splash("Week 1 is still not ready.", "Only \"test_0\" will be played")
     }
 }
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
