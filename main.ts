@@ -160,7 +160,6 @@ function SongInitialization () {
     healthBar.positionDirection(CollisionDirection.Bottom)
     healthBar.setStatusBarFlag(StatusBarFlag.InvertFillDirection, true)
     healthBar.y = 115
-    accuracyGradeSuffix = ""
     if (song == 1) {
         if (difficulty == 3) {
             scrollSpeed = 100
@@ -806,7 +805,6 @@ let late: Sprite = null
 let scrollSpeed = 0
 let difficulty = 0
 let song = 0
-let accuracyGradeSuffix = ""
 let songRunning = 0
 let notesPassed = 0
 let arrowDown: Sprite = null
@@ -830,44 +828,15 @@ game.onUpdateInterval(20, function () {
             accuracy = (notesHit - notesMissed / 2) / notesCurrentTotal * 100
             if (accuracy == 100) {
                 accuracyGrade = "FC"
-                accuracyGradeSuffix = ""
-            } else if (accuracy >= 95 && accuracy < 100) {
+            } else if (accuracy >= 90 && accuracy < 100) {
                 accuracyGrade = "A"
-                accuracyGradeSuffix = "+"
-            } else if (accuracy >= 92 && accuracy < 95) {
-                accuracyGrade = "A"
-                accuracyGradeSuffix = ""
-            } else if (accuracy >= 90 && accuracy < 92) {
-                accuracyGrade = "A"
-                accuracyGradeSuffix = "-"
-            } else if (accuracy >= 85 && accuracy < 90) {
+            } else if (accuracy >= 80 && accuracy < 90) {
                 accuracyGrade = "B"
-                accuracyGradeSuffix = "+"
-            } else if (accuracy >= 82 && accuracy < 85) {
-                accuracyGrade = "B"
-                accuracyGradeSuffix = ""
-            } else if (accuracy >= 80 && accuracy < 82) {
-                accuracyGrade = "B"
-                accuracyGradeSuffix = "-"
-            } else if (accuracy >= 75 && accuracy < 80) {
+            } else if (accuracy >= 70 && accuracy < 80) {
                 accuracyGrade = "C"
-                accuracyGradeSuffix = "+"
-            } else if (accuracy >= 72 && accuracy < 75) {
-                accuracyGrade = "C"
-                accuracyGradeSuffix = ""
-            } else if (accuracy >= 70 && accuracy < 72) {
-                accuracyGrade = "C"
-                accuracyGradeSuffix = "-"
-            } else if (accuracy >= 65 && accuracy < 70) {
+            } else if (accuracy >= 60 && accuracy < 70) {
                 accuracyGrade = "D"
-                accuracyGradeSuffix = "+"
-            } else if (accuracy >= 62 && accuracy < 65) {
-                accuracyGrade = "D"
-                accuracyGradeSuffix = ""
-            } else if (accuracy >= 60 && accuracy < 62) {
-                accuracyGrade = "D"
-                accuracyGradeSuffix = "-"
-            } else {
+            } else if (accuracy < 60) {
                 accuracyGrade = "F"
             }
         }
@@ -875,7 +844,7 @@ game.onUpdateInterval(20, function () {
         scoreCounterDisplay.setText("|Score:" + scoreCounter + "|")
         missesCounter = convertToText(notesMissed)
         missesCounterDisplay.setText("Missed:" + missesCounter + "|")
-        accuracyGradeDisplay.setText("" + accuracyGrade + accuracyGradeSuffix + "|")
+        accuracyGradeDisplay.setText("" + accuracyGrade + "|")
         if (notesMissed < 10) {
             missesCounterDisplay.x = scoreCounterDisplay.width + 32
         } else if (notesMissed > 9 && notesMissed < 100) {
@@ -883,10 +852,10 @@ game.onUpdateInterval(20, function () {
         } else if (notesMissed > 99 && notesMissed < 1000) {
             missesCounterDisplay.x = scoreCounterDisplay.width + 38
         }
-        if (accuracyGrade == "FC" || accuracyGradeSuffix != "") {
-            accuracyGradeDisplay.x = missesCounterDisplay.width + 70
+        if (accuracyGrade == "FC") {
+            accuracyGradeDisplay.x = missesCounterDisplay.x + (missesCounterDisplay.width / 2 + 9)
         } else {
-            accuracyGradeDisplay.x = missesCounterDisplay.width + 80
+            accuracyGradeDisplay.x = missesCounterDisplay.x + (missesCounterDisplay.width / 2 + 6)
         }
         statusHealth = healthBar.value
         if (statusHealth == 0) {
