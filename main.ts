@@ -639,6 +639,8 @@ blockMenu.onMenuOptionSelected(function (option, index) {
             blockMenu.setControlsEnabled(false)
             blockMenu.closeMenu()
             SongInitialization()
+        } else if (menu == 2) {
+            game.splash("Not available yet", "Coming soon")
         }
     } else if (index == 1) {
         if (menu == 0) {
@@ -647,10 +649,16 @@ blockMenu.onMenuOptionSelected(function (option, index) {
         } else if (menu == 1) {
             menu = 0
             blockMenu.showMenu(["Story mode", "Freeplay", "Options", "Credits"], MenuStyle.List, MenuLocation.BottomHalf)
+        } else if (menu == 2) {
+            game.splash("Not available yet", "Coming soon")
         }
     } else if (index == 2) {
         if (menu == 0) {
-            game.splash("Not available yet", "Coming soon")
+            menu = 2
+            blockMenu.showMenu(["Preferences", "Controls", "Back"], MenuStyle.List, MenuLocation.BottomHalf)
+        } else if (menu == 2) {
+            menu = 0
+            blockMenu.showMenu(["Story mode", "Freeplay", "Options", "Credits"], MenuStyle.List, MenuLocation.BottomHalf)
         }
     } else if (index == 3) {
         if (menu == 0) {
