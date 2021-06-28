@@ -151,7 +151,305 @@ scene.onOverlapTile(SpriteKind.Barrier, assets.tile`myTile3`, function (sprite, 
     notesMissed += 1
     notesPassed += 1
 })
-function SongInitialization () {
+controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (levelPlaying == 1) {
+        PressRight()
+    }
+})
+scene.onOverlapTile(SpriteKind.BarrierP2, assets.tile`myTile1`, function (sprite, location) {
+    tiles.setTileAt(location, assets.tile`transparency16`)
+})
+function StartMenu () {
+    levelPlaying = 0
+    menu = 0
+    weekWarningPopup = 0
+    toggleDownscroll = "OFF"
+    toggleFlashingMenu = "ON"
+    toggleFPSCounter = "OFF"
+    accuracyGrade = "FC"
+    difficulty = 0
+    blockMenu.showMenu(["Story mode", "Freeplay", "Options", "Credits"], MenuStyle.List, MenuLocation.BottomHalf)
+    blockMenu.setColors(1, 15)
+}
+controller.up.onEvent(ControllerButtonEvent.Released, function () {
+    ReleaseUp()
+})
+function ReleaseDown () {
+    if (levelPlaying == 1) {
+        arrowDown.setImage(img`
+            . . . . . f f f f f f f . . . . 
+            . . . . f 1 1 1 1 1 1 f . . . . 
+            . . . . f 1 d d d d d f . . . . 
+            . . . . f 1 d d d d d f . . . . 
+            . . . . f 1 d d d d d f . . . . 
+            . . . . f 1 d d d d d f . . . . 
+            . . . . f 1 d d d d d f . . . . 
+            f f f . f 1 d d d d d f . f f f 
+            f 1 1 f f 1 d d d d d f f b b f 
+            f 1 d 1 1 d d d d d d d d d b f 
+            . f b d d d d d d d d d d b f . 
+            . f b d d d d d d d d d d b f . 
+            . . f b b d d d d d d b b f . . 
+            . . . f f b d d d d b f f . . . 
+            . . . . . f b b b b f . . . . . 
+            . . . . . . f f f f . . . . . . 
+            `)
+    }
+}
+function PressRight () {
+    arrowRight.setImage(img`
+        . . . . . . . f f f . . . . . . 
+        . . . . . . . f 1 1 f f . . . . 
+        . . . . . . . f 1 2 1 1 f . . . 
+        . . . . . . . . f 2 2 2 1 f . . 
+        f f f f f f f f f 2 2 2 1 f . . 
+        f 1 1 1 1 1 1 1 1 2 2 2 2 1 f . 
+        f 1 2 2 2 2 2 2 2 2 2 2 2 2 1 f 
+        f 1 2 2 2 2 2 2 2 2 2 2 2 2 4 f 
+        f 1 2 2 2 2 2 2 2 2 2 2 2 2 4 f 
+        f 1 2 2 2 2 2 2 2 2 2 2 2 2 4 f 
+        f 1 4 4 4 4 4 4 4 2 2 2 2 4 f . 
+        . f f f f f f f f 2 2 2 2 f . . 
+        . . . . . . . . f 2 2 2 4 f . . 
+        . . . . . . . f 4 2 4 4 f . . . 
+        . . . . . . . f 4 4 f f . . . . 
+        . . . . . . . f f f . . . . . . 
+        `)
+    if (arrowRight.tileKindAt(TileDirection.Center, assets.tile`transparency16`)) {
+        healthBar.value += -3
+        score += -50
+        notesMissed += 1
+    } else if (arrowRight.tileKindAt(TileDirection.Center, assets.tile`myTile3`)) {
+        score += 200
+        tiles.setTileAt(tiles.getTileLocation(9, arrowRight.y / 16), assets.tile`transparency16`)
+        healthBar.value += 2
+        notesHit += 1
+    }
+}
+scene.onOverlapTile(SpriteKind.BarrierP2, assets.tile`myTile3`, function (sprite, location) {
+    tiles.setTileAt(location, assets.tile`transparency16`)
+})
+scene.onOverlapTile(SpriteKind.Barrier, assets.tile`myTile`, function (sprite, location) {
+    tiles.setTileAt(location, assets.tile`transparency16`)
+    score += -50
+    healthBar.value += -2
+    notesMissed += 1
+    notesPassed += 1
+})
+function PressUp () {
+    arrowUp.setImage(img`
+        . . . . . . f f f f . . . . . . 
+        . . . . . f 1 1 1 6 f . . . . . 
+        . . . f f 1 7 7 7 7 6 f f . . . 
+        . . f 1 1 7 7 7 7 7 7 6 6 f . . 
+        . f 1 7 7 7 7 7 7 7 7 7 7 6 f . 
+        . f 1 7 7 7 7 7 7 7 7 7 7 6 f . 
+        f 1 7 1 1 7 7 7 7 7 7 6 6 7 6 f 
+        f 1 1 f f 1 7 7 7 7 6 f f 6 6 f 
+        f f f . f 1 7 7 7 7 6 f . f f f 
+        . . . . f 1 7 7 7 7 6 f . . . . 
+        . . . . f 1 7 7 7 7 6 f . . . . 
+        . . . . f 1 7 7 7 7 6 f . . . . 
+        . . . . f 1 7 7 7 7 6 f . . . . 
+        . . . . f 1 7 7 7 7 6 f . . . . 
+        . . . . f 1 6 6 6 6 6 f . . . . 
+        . . . . . f f f f f f f . . . . 
+        `)
+    if (arrowUp.tileKindAt(TileDirection.Center, assets.tile`transparency16`)) {
+        healthBar.value += -3
+        score += -50
+        notesMissed += 1
+    } else if (arrowUp.tileKindAt(TileDirection.Center, assets.tile`myTile1`)) {
+        score += 200
+        tiles.setTileAt(tiles.getTileLocation(8, arrowUp.y / 16), assets.tile`transparency16`)
+        healthBar.value += 2
+        notesHit += 1
+    }
+}
+controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (levelPlaying == 1) {
+        PressDown()
+    }
+})
+function ReleaseUp () {
+    if (levelPlaying == 1) {
+        arrowUp.setImage(img`
+            . . . . . . f f f f . . . . . . 
+            . . . . . f 1 1 1 b f . . . . . 
+            . . . f f 1 d d d d b f f . . . 
+            . . f 1 1 d d d d d d b b f . . 
+            . f 1 d d d d d d d d d d b f . 
+            . f 1 d d d d d d d d d d b f . 
+            f 1 d 1 1 d d d d d d b b d b f 
+            f 1 1 f f 1 d d d d b f f b b f 
+            f f f . f 1 d d d d b f . f f f 
+            . . . . f 1 d d d d b f . . . . 
+            . . . . f 1 d d d d b f . . . . 
+            . . . . f 1 d d d d b f . . . . 
+            . . . . f 1 d d d d b f . . . . 
+            . . . . f 1 d d d d b f . . . . 
+            . . . . f 1 b b b b b f . . . . 
+            . . . . . f f f f f f f . . . . 
+            `)
+    }
+}
+scene.onOverlapTile(SpriteKind.BarrierP2, assets.tile`myTile0`, function (sprite, location) {
+    tiles.setTileAt(location, assets.tile`transparency16`)
+})
+blockMenu.onMenuOptionSelected(function (option, index) {
+    if (index == 0) {
+        if (menu == 0) {
+            game.splash("This feature is", "currently disabled")
+        } else if (menu == 1) {
+            menu = 4
+            blockMenu.showMenu(["Easy", "Normal", "Hard", "Back"], MenuStyle.List, MenuLocation.BottomLeft)
+        } else if (menu == 2) {
+            menu = 3
+            blockMenu.showMenu(["Downscroll: " + toggleDownscroll, "Flashing menu: " + toggleFlashingMenu, "FPS Counter: " + toggleFPSCounter, "Back"], MenuStyle.List, MenuLocation.BottomHalf)
+        } else if (menu == 3) {
+            if (toggleDownscroll == "OFF") {
+                toggleDownscroll = "ON"
+                blockMenu.showMenu(["Downscroll: " + toggleDownscroll, "Flashing menu: " + toggleFlashingMenu, "FPS Counter: " + toggleFPSCounter, "Back"], MenuStyle.List, MenuLocation.BottomHalf)
+                blockMenu.setSelectedIndex(0)
+            } else if (toggleDownscroll == "ON") {
+                toggleDownscroll = "OFF"
+                blockMenu.showMenu(["Downscroll: " + toggleDownscroll, "Flashing menu: " + toggleFlashingMenu, "FPS Counter: " + toggleFPSCounter, "Back"], MenuStyle.List, MenuLocation.BottomHalf)
+                blockMenu.setSelectedIndex(0)
+            }
+        } else if (menu == 4) {
+            difficulty = 1
+            game.splash("Not available", "Please play on Hard")
+        } else if (menu == 5) {
+            game.splash("Not available yet", "Coming soon")
+        } else if (menu == 6) {
+            difficulty = 1
+            game.splash("Not available", "Please play on Hard")
+        }
+    } else if (index == 1) {
+        if (menu == 0) {
+            menu = 1
+            blockMenu.showMenu(["test_0", "Back"], MenuStyle.List, MenuLocation.BottomHalf)
+        } else if (menu == 1) {
+            menu = 0
+            blockMenu.showMenu(["Story mode", "Freeplay", "Options", "Credits"], MenuStyle.List, MenuLocation.BottomHalf)
+            blockMenu.setSelectedIndex(1)
+        } else if (menu == 2) {
+            game.splash("Not available yet", "Coming soon")
+        } else if (menu == 3) {
+            if (toggleFlashingMenu == "OFF") {
+                toggleFlashingMenu = "ON"
+                blockMenu.showMenu(["Downscroll: " + toggleDownscroll, "Flashing menu: " + toggleFlashingMenu, "FPS Counter: " + toggleFPSCounter, "Back"], MenuStyle.List, MenuLocation.BottomHalf)
+                blockMenu.setSelectedIndex(1)
+            } else if (toggleFlashingMenu == "ON") {
+                toggleFlashingMenu = "OFF"
+                blockMenu.showMenu(["Downscroll: " + toggleDownscroll, "Flashing menu: " + toggleFlashingMenu, "FPS Counter: " + toggleFPSCounter, "Back"], MenuStyle.List, MenuLocation.BottomHalf)
+                blockMenu.setSelectedIndex(1)
+            }
+        } else if (menu == 4) {
+            difficulty = 2
+            game.splash("Not available", "Please play on Hard")
+        } else if (menu == 5) {
+            menu = 6
+            blockMenu.showMenu(["Easy", "Normal", "Hard", "Back"], MenuStyle.List, MenuLocation.BottomLeft)
+        } else if (menu == 6) {
+            difficulty = 2
+            game.splash("Not available", "Please play on Hard")
+        }
+    } else if (index == 2) {
+        if (menu == 0) {
+            menu = 2
+            blockMenu.showMenu(["Preferences", "Controls", "Back"], MenuStyle.List, MenuLocation.BottomHalf)
+        } else if (menu == 2) {
+            menu = 0
+            blockMenu.showMenu(["Story mode", "Freeplay", "Options", "Credits"], MenuStyle.List, MenuLocation.BottomHalf)
+            blockMenu.setSelectedIndex(2)
+        } else if (menu == 3) {
+            if (toggleFPSCounter == "OFF") {
+                toggleFPSCounter = "ON"
+                stats.turnStats(true)
+                blockMenu.showMenu(["Downscroll: " + toggleDownscroll, "Flashing menu: " + "ON", "FPS Counter: " + toggleFPSCounter, "Back"], MenuStyle.List, MenuLocation.BottomHalf)
+                blockMenu.setSelectedIndex(2)
+            } else if (toggleFPSCounter == "ON") {
+                toggleFPSCounter = "OFF"
+                stats.turnStats(false)
+                blockMenu.showMenu(["Downscroll: " + toggleDownscroll, "Flashing menu: " + "ON", "FPS Counter: " + toggleFPSCounter, "Back"], MenuStyle.List, MenuLocation.BottomHalf)
+                blockMenu.setSelectedIndex(2)
+            }
+        } else if (menu == 4) {
+            difficulty = 3
+            song = 1
+            levelPlaying = 1
+            blockMenu.setControlsEnabled(false)
+            blockMenu.closeMenu()
+            LevelInitialization()
+        } else if (menu == 5) {
+            menu = 0
+            blockMenu.showMenu(["Story mode", "Freeplay", "Options", "Credits"], MenuStyle.List, MenuLocation.BottomHalf)
+            blockMenu.setSelectedIndex(0)
+        } else if (menu == 6) {
+            weekWarningPopup = 1
+            difficulty = 3
+            song = 1
+            levelPlaying = 1
+            blockMenu.setControlsEnabled(false)
+            blockMenu.closeMenu()
+            LevelInitialization()
+        }
+    } else if (index == 3) {
+        if (menu == 0) {
+            game.splash("Not available yet", "Coming soon")
+        } else if (menu == 3) {
+            menu = 2
+            blockMenu.showMenu(["Preferences", "Controls", "Back"], MenuStyle.List, MenuLocation.BottomHalf)
+        } else if (menu == 4) {
+            menu = 1
+            blockMenu.showMenu(["test_0", "Back"], MenuStyle.List, MenuLocation.BottomHalf)
+        } else if (menu == 6) {
+            menu = 5
+            blockMenu.showMenu(["Tutorial", "Week 1", "Back"], MenuStyle.List, MenuLocation.BottomHalf)
+            blockMenu.setSelectedIndex(1)
+        }
+    }
+})
+scene.onOverlapTile(SpriteKind.Barrier, assets.tile`myTile1`, function (sprite, location) {
+    tiles.setTileAt(location, assets.tile`transparency16`)
+    score += -50
+    healthBar.value += -2
+    notesMissed += 1
+    notesPassed += 1
+})
+function LevelRestart () {
+    ReleaseLeft()
+    ReleaseDown()
+    ReleaseUp()
+    ReleaseRight()
+    levelPlaying = 0
+    notesHit = 0
+    notesMissed = 0
+    notesPassed = 0
+    score = 0
+    statusHealth = 1
+    arrowLeft.destroy()
+    arrowDown.destroy()
+    arrowUp.destroy()
+    arrowRight.destroy()
+    late.destroy()
+    arrowLeftP2.destroy()
+    arrowDownP2.destroy()
+    arrowUpP2.destroy()
+    arrowRightP2.destroy()
+    arrowRightP2.destroy()
+    healthBar.destroy()
+    opponentHealthIcon.destroy()
+    playerHealthIcon.destroy()
+    scoreCounterDisplay.destroy()
+    missesCounterDisplay.destroy()
+    accuracyGradeDisplay.destroy()
+    LevelInitialization()
+}
+function LevelInitialization () {
+    score = 0
+    notesMissed = 0
     songRunning = 0
     healthBar = statusbars.create(140, 4, StatusBarKind.Health)
     healthBar.setColor(7, 2)
@@ -556,303 +854,35 @@ function SongInitialization () {
         game.splash("Week 1 is still not ready.", "Only \"test_0\" will be played")
     }
 }
-controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (levelPlaying == 1) {
-        PressRight()
-    }
-})
-scene.onOverlapTile(SpriteKind.BarrierP2, assets.tile`myTile1`, function (sprite, location) {
-    tiles.setTileAt(location, assets.tile`transparency16`)
-})
-function StartMenu () {
-    levelPlaying = 0
-    menu = 0
-    weekWarningPopup = 0
-    toggleDownscroll = "OFF"
-    toggleFlashingMenu = "ON"
-    toggleFPSCounter = "OFF"
-    accuracyGrade = "FC"
-    difficulty = 0
-    blockMenu.showMenu(["Story mode", "Freeplay", "Options", "Credits"], MenuStyle.List, MenuLocation.BottomHalf)
-    blockMenu.setColors(1, 15)
-}
-controller.up.onEvent(ControllerButtonEvent.Released, function () {
-    ReleaseUp()
-})
-function ReleaseDown () {
-    if (levelPlaying == 1) {
-        arrowDown.setImage(img`
-            . . . . . f f f f f f f . . . . 
-            . . . . f 1 1 1 1 1 1 f . . . . 
-            . . . . f 1 d d d d d f . . . . 
-            . . . . f 1 d d d d d f . . . . 
-            . . . . f 1 d d d d d f . . . . 
-            . . . . f 1 d d d d d f . . . . 
-            . . . . f 1 d d d d d f . . . . 
-            f f f . f 1 d d d d d f . f f f 
-            f 1 1 f f 1 d d d d d f f b b f 
-            f 1 d 1 1 d d d d d d d d d b f 
-            . f b d d d d d d d d d d b f . 
-            . f b d d d d d d d d d d b f . 
-            . . f b b d d d d d d b b f . . 
-            . . . f f b d d d d b f f . . . 
-            . . . . . f b b b b f . . . . . 
-            . . . . . . f f f f . . . . . . 
-            `)
-    }
-}
-function PressRight () {
-    arrowRight.setImage(img`
-        . . . . . . . f f f . . . . . . 
-        . . . . . . . f 1 1 f f . . . . 
-        . . . . . . . f 1 2 1 1 f . . . 
-        . . . . . . . . f 2 2 2 1 f . . 
-        f f f f f f f f f 2 2 2 1 f . . 
-        f 1 1 1 1 1 1 1 1 2 2 2 2 1 f . 
-        f 1 2 2 2 2 2 2 2 2 2 2 2 2 1 f 
-        f 1 2 2 2 2 2 2 2 2 2 2 2 2 4 f 
-        f 1 2 2 2 2 2 2 2 2 2 2 2 2 4 f 
-        f 1 2 2 2 2 2 2 2 2 2 2 2 2 4 f 
-        f 1 4 4 4 4 4 4 4 2 2 2 2 4 f . 
-        . f f f f f f f f 2 2 2 2 f . . 
-        . . . . . . . . f 2 2 2 4 f . . 
-        . . . . . . . f 4 2 4 4 f . . . 
-        . . . . . . . f 4 4 f f . . . . 
-        . . . . . . . f f f . . . . . . 
-        `)
-    if (arrowRight.tileKindAt(TileDirection.Center, assets.tile`transparency16`)) {
-        healthBar.value += -3
-        score += -50
-        notesMissed += 1
-    } else if (arrowRight.tileKindAt(TileDirection.Center, assets.tile`myTile3`)) {
-        score += 200
-        tiles.setTileAt(tiles.getTileLocation(9, arrowRight.y / 16), assets.tile`transparency16`)
-        healthBar.value += 2
-        notesHit += 1
-    }
-}
-scene.onOverlapTile(SpriteKind.BarrierP2, assets.tile`myTile3`, function (sprite, location) {
-    tiles.setTileAt(location, assets.tile`transparency16`)
-})
-scene.onOverlapTile(SpriteKind.Barrier, assets.tile`myTile`, function (sprite, location) {
-    tiles.setTileAt(location, assets.tile`transparency16`)
-    score += -50
-    healthBar.value += -2
-    notesMissed += 1
-    notesPassed += 1
-})
-function PressUp () {
-    arrowUp.setImage(img`
-        . . . . . . f f f f . . . . . . 
-        . . . . . f 1 1 1 6 f . . . . . 
-        . . . f f 1 7 7 7 7 6 f f . . . 
-        . . f 1 1 7 7 7 7 7 7 6 6 f . . 
-        . f 1 7 7 7 7 7 7 7 7 7 7 6 f . 
-        . f 1 7 7 7 7 7 7 7 7 7 7 6 f . 
-        f 1 7 1 1 7 7 7 7 7 7 6 6 7 6 f 
-        f 1 1 f f 1 7 7 7 7 6 f f 6 6 f 
-        f f f . f 1 7 7 7 7 6 f . f f f 
-        . . . . f 1 7 7 7 7 6 f . . . . 
-        . . . . f 1 7 7 7 7 6 f . . . . 
-        . . . . f 1 7 7 7 7 6 f . . . . 
-        . . . . f 1 7 7 7 7 6 f . . . . 
-        . . . . f 1 7 7 7 7 6 f . . . . 
-        . . . . f 1 6 6 6 6 6 f . . . . 
-        . . . . . f f f f f f f . . . . 
-        `)
-    if (arrowUp.tileKindAt(TileDirection.Center, assets.tile`transparency16`)) {
-        healthBar.value += -3
-        score += -50
-        notesMissed += 1
-    } else if (arrowUp.tileKindAt(TileDirection.Center, assets.tile`myTile1`)) {
-        score += 200
-        tiles.setTileAt(tiles.getTileLocation(8, arrowUp.y / 16), assets.tile`transparency16`)
-        healthBar.value += 2
-        notesHit += 1
-    }
-}
-controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (levelPlaying == 1) {
-        PressDown()
-    }
-})
-function ReleaseUp () {
-    if (levelPlaying == 1) {
-        arrowUp.setImage(img`
-            . . . . . . f f f f . . . . . . 
-            . . . . . f 1 1 1 b f . . . . . 
-            . . . f f 1 d d d d b f f . . . 
-            . . f 1 1 d d d d d d b b f . . 
-            . f 1 d d d d d d d d d d b f . 
-            . f 1 d d d d d d d d d d b f . 
-            f 1 d 1 1 d d d d d d b b d b f 
-            f 1 1 f f 1 d d d d b f f b b f 
-            f f f . f 1 d d d d b f . f f f 
-            . . . . f 1 d d d d b f . . . . 
-            . . . . f 1 d d d d b f . . . . 
-            . . . . f 1 d d d d b f . . . . 
-            . . . . f 1 d d d d b f . . . . 
-            . . . . f 1 d d d d b f . . . . 
-            . . . . f 1 b b b b b f . . . . 
-            . . . . . f f f f f f f . . . . 
-            `)
-    }
-}
-scene.onOverlapTile(SpriteKind.BarrierP2, assets.tile`myTile0`, function (sprite, location) {
-    tiles.setTileAt(location, assets.tile`transparency16`)
-})
-blockMenu.onMenuOptionSelected(function (option, index) {
-    if (index == 0) {
-        if (menu == 0) {
-            menu = 5
-            blockMenu.showMenu(["Tutorial", "Week 1", "Back"], MenuStyle.List, MenuLocation.BottomHalf)
-        } else if (menu == 1) {
-            menu = 4
-            blockMenu.showMenu(["Easy", "Normal", "Hard", "Back"], MenuStyle.List, MenuLocation.BottomLeft)
-        } else if (menu == 2) {
-            menu = 3
-            blockMenu.showMenu(["Downscroll: " + toggleDownscroll, "Flashing menu: " + toggleFlashingMenu, "FPS Counter: " + toggleFPSCounter, "Back"], MenuStyle.List, MenuLocation.BottomHalf)
-        } else if (menu == 3) {
-            if (toggleDownscroll == "OFF") {
-                toggleDownscroll = "ON"
-                blockMenu.showMenu(["Downscroll: " + toggleDownscroll, "Flashing menu: " + toggleFlashingMenu, "FPS Counter: " + toggleFPSCounter, "Back"], MenuStyle.List, MenuLocation.BottomHalf)
-                blockMenu.setSelectedIndex(0)
-            } else if (toggleDownscroll == "ON") {
-                toggleDownscroll = "OFF"
-                blockMenu.showMenu(["Downscroll: " + toggleDownscroll, "Flashing menu: " + toggleFlashingMenu, "FPS Counter: " + toggleFPSCounter, "Back"], MenuStyle.List, MenuLocation.BottomHalf)
-                blockMenu.setSelectedIndex(0)
-            }
-        } else if (menu == 4) {
-            difficulty = 1
-            game.splash("Not available", "Please play on Hard")
-        } else if (menu == 5) {
-            game.splash("Not available yet", "Coming soon")
-        } else if (menu == 6) {
-            difficulty = 1
-            game.splash("Not available", "Please play on Hard")
-        }
-    } else if (index == 1) {
-        if (menu == 0) {
-            menu = 1
-            blockMenu.showMenu(["test_0", "Back"], MenuStyle.List, MenuLocation.BottomHalf)
-        } else if (menu == 1) {
-            menu = 0
-            blockMenu.showMenu(["Story mode", "Freeplay", "Options", "Credits"], MenuStyle.List, MenuLocation.BottomHalf)
-            blockMenu.setSelectedIndex(1)
-        } else if (menu == 2) {
-            game.splash("Not available yet", "Coming soon")
-        } else if (menu == 3) {
-            if (toggleFlashingMenu == "OFF") {
-                toggleFlashingMenu = "ON"
-                blockMenu.showMenu(["Downscroll: " + toggleDownscroll, "Flashing menu: " + toggleFlashingMenu, "FPS Counter: " + toggleFPSCounter, "Back"], MenuStyle.List, MenuLocation.BottomHalf)
-                blockMenu.setSelectedIndex(1)
-            } else if (toggleFlashingMenu == "ON") {
-                toggleFlashingMenu = "OFF"
-                blockMenu.showMenu(["Downscroll: " + toggleDownscroll, "Flashing menu: " + toggleFlashingMenu, "FPS Counter: " + toggleFPSCounter, "Back"], MenuStyle.List, MenuLocation.BottomHalf)
-                blockMenu.setSelectedIndex(1)
-            }
-        } else if (menu == 4) {
-            difficulty = 2
-            game.splash("Not available", "Please play on Hard")
-        } else if (menu == 5) {
-            menu = 6
-            blockMenu.showMenu(["Easy", "Normal", "Hard", "Back"], MenuStyle.List, MenuLocation.BottomLeft)
-        } else if (menu == 6) {
-            difficulty = 2
-            game.splash("Not available", "Please play on Hard")
-        }
-    } else if (index == 2) {
-        if (menu == 0) {
-            menu = 2
-            blockMenu.showMenu(["Preferences", "Controls", "Back"], MenuStyle.List, MenuLocation.BottomHalf)
-        } else if (menu == 2) {
-            menu = 0
-            blockMenu.showMenu(["Story mode", "Freeplay", "Options", "Credits"], MenuStyle.List, MenuLocation.BottomHalf)
-            blockMenu.setSelectedIndex(2)
-        } else if (menu == 3) {
-            if (toggleFPSCounter == "OFF") {
-                toggleFPSCounter = "ON"
-                stats.turnStats(true)
-                blockMenu.showMenu(["Downscroll: " + toggleDownscroll, "Flashing menu: " + "ON", "FPS Counter: " + toggleFPSCounter, "Back"], MenuStyle.List, MenuLocation.BottomHalf)
-                blockMenu.setSelectedIndex(2)
-            } else if (toggleFPSCounter == "ON") {
-                toggleFPSCounter = "OFF"
-                stats.turnStats(false)
-                blockMenu.showMenu(["Downscroll: " + toggleDownscroll, "Flashing menu: " + "ON", "FPS Counter: " + toggleFPSCounter, "Back"], MenuStyle.List, MenuLocation.BottomHalf)
-                blockMenu.setSelectedIndex(2)
-            }
-        } else if (menu == 4) {
-            difficulty = 3
-            song = 1
-            levelPlaying = 1
-            blockMenu.setControlsEnabled(false)
-            blockMenu.closeMenu()
-            SongInitialization()
-        } else if (menu == 5) {
-            menu = 0
-            blockMenu.showMenu(["Story mode", "Freeplay", "Options", "Credits"], MenuStyle.List, MenuLocation.BottomHalf)
-            blockMenu.setSelectedIndex(0)
-        } else if (menu == 6) {
-            weekWarningPopup = 1
-            difficulty = 3
-            song = 1
-            levelPlaying = 1
-            blockMenu.setControlsEnabled(false)
-            blockMenu.closeMenu()
-            SongInitialization()
-        }
-    } else if (index == 3) {
-        if (menu == 0) {
-            game.splash("Not available yet", "Coming soon")
-        } else if (menu == 3) {
-            menu = 2
-            blockMenu.showMenu(["Preferences", "Controls", "Back"], MenuStyle.List, MenuLocation.BottomHalf)
-        } else if (menu == 4) {
-            menu = 1
-            blockMenu.showMenu(["test_0", "Back"], MenuStyle.List, MenuLocation.BottomHalf)
-        } else if (menu == 6) {
-            menu = 5
-            blockMenu.showMenu(["Tutorial", "Week 1", "Back"], MenuStyle.List, MenuLocation.BottomHalf)
-            blockMenu.setSelectedIndex(1)
-        }
-    }
-})
-scene.onOverlapTile(SpriteKind.Barrier, assets.tile`myTile1`, function (sprite, location) {
-    tiles.setTileAt(location, assets.tile`transparency16`)
-    score += -50
-    healthBar.value += -2
-    notesMissed += 1
-    notesPassed += 1
-})
 let missesCounter = ""
 let scoreCounter = ""
 let accuracy = 0
-let statusHealth = 0
 let healthbarEmptyness = 0
 let arrowPos = 0
 let notesCurrentTotal = 0
-let accuracyGrade = ""
-let toggleFPSCounter = ""
-let toggleFlashingMenu = ""
-let toggleDownscroll = ""
-let menu = 0
-let weekWarningPopup = 0
+let lateP2: Sprite = null
+let scrollSpeed = 0
+let songRunning = 0
 let accuracyGradeDisplay: TextSprite = null
 let missesCounterDisplay: TextSprite = null
 let scoreCounterDisplay: TextSprite = null
-let opponentHealthIcon: Sprite = null
 let playerHealthIcon: Sprite = null
+let opponentHealthIcon: Sprite = null
 let arrowRightP2: Sprite = null
 let arrowUpP2: Sprite = null
 let arrowDownP2: Sprite = null
 let arrowLeftP2: Sprite = null
-let lateP2: Sprite = null
-let arrowUp: Sprite = null
 let late: Sprite = null
-let scrollSpeed = 0
-let difficulty = 0
+let statusHealth = 0
 let song = 0
-let songRunning = 0
+let arrowUp: Sprite = null
+let difficulty = 0
+let accuracyGrade = ""
+let toggleFPSCounter = ""
+let toggleFlashingMenu = ""
+let toggleDownscroll = ""
+let weekWarningPopup = 0
+let menu = 0
 let notesPassed = 0
 let arrowDown: Sprite = null
 let notesHit = 0
@@ -911,7 +941,8 @@ game.onUpdateInterval(20, function () {
         }
         statusHealth = healthBar.value
         if (statusHealth == 0) {
-        	
+            game.splash("You failed", "Press A to restart")
+            LevelRestart()
         }
     }
 })
