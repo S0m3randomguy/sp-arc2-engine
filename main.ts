@@ -160,7 +160,7 @@ function SongInitialization () {
     healthBar.setBarBorder(1, 15)
     healthBar.positionDirection(CollisionDirection.Bottom)
     healthBar.setStatusBarFlag(StatusBarFlag.InvertFillDirection, true)
-    healthBar.y = 103
+    healthBar.y = 102
     healthBar.z = -10
     if (song == 1) {
         if (difficulty == 3) {
@@ -473,19 +473,19 @@ function SongInitialization () {
         `, SpriteKind.RightArrowP2)
     playerHealthIcon = sprites.create(img`
         ....................
-        ....ffffffff........
-        .fff9999999fff......
-        fff99999999f99f.....
-        f9ff9999f99f99f.....
-        f9fff99ff99f99f.....
-        f9f6ffff6ff999fffff.
-        fff66ff666fffff6f66f
-        f.f6f66f66f6f66f.fff
-        .ff6f66f66f6ff6f....
-        .f66f66f66ff.fff....
-        .ff66666666f..ff....
-        .f.fff6666f.........
-        ......ffff..........
+        ....................
+        ..ffffffffffff......
+        ..f19999999f66f.....
+        ..fff999999f66f.....
+        .f99f999999f66f.....
+        f99f9999f99f66f.....
+        f99f999ff99f66f.....
+        f9f6ffff6ff666fffff.
+        fff66ff666fffff1f66f
+        f.f6f66f66f9f99f.fff
+        ..f6f66f66f9ff9f....
+        ..f66666666f.fff....
+        ...ffffffff...ff....
         ....................
         ....................
         `, SpriteKind.HealthIcon)
@@ -535,9 +535,12 @@ function SongInitialization () {
     arrowUpP2.setVelocity(0, scrollSpeed)
     arrowRightP2.setVelocity(0, scrollSpeed)
     lateP2.setVelocity(0, scrollSpeed)
-    opponentHealthIcon.setPosition(70, 122)
+    opponentHealthIcon.setPosition(71, 110)
     opponentHealthIcon.z = 10
     opponentHealthIcon.setVelocity(0, scrollSpeed)
+    playerHealthIcon.setPosition(91, 110)
+    playerHealthIcon.z = 10
+    playerHealthIcon.setVelocity(0, scrollSpeed)
     scoreCounterDisplay = textsprite.create("Score:0")
     scoreCounterDisplay.setPosition(25, 123)
     scoreCounterDisplay.setVelocity(0, scrollSpeed)
@@ -871,15 +874,15 @@ game.onUpdateInterval(20, function () {
             accuracy = (notesHit - notesMissed / 2) / notesCurrentTotal * 100
             if (accuracy == 100) {
                 accuracyGrade = "FC"
-            } else if (accuracy >= 90 && accuracy < 100) {
+            } else if (accuracy >= 85 && accuracy < 100) {
                 accuracyGrade = "A"
-            } else if (accuracy >= 80 && accuracy < 90) {
+            } else if (accuracy >= 75 && accuracy < 85) {
                 accuracyGrade = "B"
-            } else if (accuracy >= 70 && accuracy < 80) {
+            } else if (accuracy >= 65 && accuracy < 75) {
                 accuracyGrade = "C"
-            } else if (accuracy >= 60 && accuracy < 70) {
+            } else if (accuracy >= 55 && accuracy < 65) {
                 accuracyGrade = "D"
-            } else if (accuracy < 60) {
+            } else if (accuracy < 55) {
                 accuracyGrade = "F"
             }
         }
