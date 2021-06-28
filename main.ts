@@ -153,10 +153,10 @@ scene.onOverlapTile(SpriteKind.Barrier, assets.tile`myTile3`, function (sprite, 
 })
 function SongInitialization () {
     songRunning = 0
-    healthBar = statusbars.create(150, 4, StatusBarKind.Health)
+    healthBar = statusbars.create(140, 4, StatusBarKind.Health)
     healthBar.setColor(7, 2)
-    healthBar.max = 120
-    healthBar.value = 60
+    healthBar.max = 140
+    healthBar.value = 70
     healthBar.setBarBorder(1, 15)
     healthBar.positionDirection(CollisionDirection.Bottom)
     healthBar.setStatusBarFlag(StatusBarFlag.InvertFillDirection, true)
@@ -479,9 +479,9 @@ function SongInitialization () {
         ..fff999999f66f.....
         .f99f999999f66f.....
         f99f9999f99f66f.....
-        f99f999ff99f66f.....
+        f99ff99ff99f66f.....
         f9f6ffff6ff666fffff.
-        fff66ff666fffff1f66f
+        fff66ff666fffff9f66f
         f.f6f66f66f9f99f.fff
         ..f6f66f66f9ff9f....
         ..f66666666f.fff....
@@ -492,18 +492,18 @@ function SongInitialization () {
     opponentHealthIcon = sprites.create(img`
         . . . f f f . . . . . . f f f . 
         . . . . f f f . . . . f f f . . 
-        . . . . f c c f f f f f c f . . 
+        . . . . f a a f f f f f a f . . 
         . . . . . f f f a a f a f . . . 
-        . . . f f f f f f c f c f . . . 
-        . . . f c f f f 5 f f f f . . . 
-        . f f f a c f f f f f 5 f f . . 
-        . f a f a a c c c c f f f f . . 
-        . f a f a f f f a a c c c f . . 
-        . f a a a f f 1 f f f f f f . . 
-        . f c f a f 1 f 1 f 1 f 1 f . . 
-        . . f a f a f d f d f d f f . . 
-        . . f c f a f f d f f f a f . . 
-        . . f f a a a f f f a c c f . . 
+        . . . f f f f f f a f a f . . . 
+        . . . f a f f f 5 f f f f . . . 
+        . f f f a a f f f f f 5 f f . . 
+        . f a f a a a a a a f f f f . . 
+        . f a f a f f f a a a a a f . . 
+        . f c c a f f 1 f f f f f f . . 
+        . f c f c f 1 f 1 f 1 f 1 f . . 
+        . . f c f c f d f d f d f f . . 
+        . . f c f c f f d f f f c f . . 
+        . . f f c c c f f f c c c f . . 
         . . . f c c c c c c c f f . . . 
         . . . . f f f f f f f f . . . . 
         `, SpriteKind.HealthIcon)
@@ -824,10 +824,11 @@ scene.onOverlapTile(SpriteKind.Barrier, assets.tile`myTile1`, function (sprite, 
     notesMissed += 1
     notesPassed += 1
 })
-let statusHealth = 0
 let missesCounter = ""
 let scoreCounter = ""
 let accuracy = 0
+let statusHealth = 0
+let healthbarEmptyness = 0
 let arrowPos = 0
 let notesCurrentTotal = 0
 let accuracyGrade = ""
@@ -867,6 +868,11 @@ game.onUpdateInterval(20, function () {
         notesCurrentTotal = notesPassed + notesHit
         arrowPos = late.y
         scene.centerCameraAt(0, arrowPos + 70)
+        healthbarEmptyness = healthBar.max - statusHealth
+        if (statusHealth < healthBar.max - (opponentHealthIcon.width + 1 - 5) && statusHealth > 0 + (playerHealthIcon.width / 2 + 1 - 5)) {
+            opponentHealthIcon.x = healthbarEmptyness + 5 - (opponentHealthIcon.width / 2 + 1)
+            playerHealthIcon.x = healthbarEmptyness + 5 + (playerHealthIcon.width / 2 + 1)
+        }
         if (notesCurrentTotal == 0 && notesMissed == 0) {
             accuracy = 100
             accuracyGrade = "FC"
@@ -905,8 +911,7 @@ game.onUpdateInterval(20, function () {
         }
         statusHealth = healthBar.value
         if (statusHealth == 0) {
-            pause(200)
-            game.over(false)
+        	
         }
     }
 })
