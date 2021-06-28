@@ -9,6 +9,7 @@ namespace SpriteKind {
     export const DownArrowP2 = SpriteKind.create()
     export const UpArrowP2 = SpriteKind.create()
     export const RightArrowP2 = SpriteKind.create()
+    export const HealthIcon = SpriteKind.create()
 }
 function ReleaseRight () {
     if (levelPlaying == 1) {
@@ -159,7 +160,8 @@ function SongInitialization () {
     healthBar.setBarBorder(1, 15)
     healthBar.positionDirection(CollisionDirection.Bottom)
     healthBar.setStatusBarFlag(StatusBarFlag.InvertFillDirection, true)
-    healthBar.y = 115
+    healthBar.y = 103
+    healthBar.z = -10
     if (song == 1) {
         if (difficulty == 3) {
             scrollSpeed = 100
@@ -469,6 +471,42 @@ function SongInitialization () {
         . . . . . . . f b b f f . . . . 
         . . . . . . . f f f . . . . . . 
         `, SpriteKind.RightArrowP2)
+    playerHealthIcon = sprites.create(img`
+        ....................
+        ....ffffffff........
+        .fff9999999fff......
+        fff99999999f99f.....
+        f9ff9999f99f99f.....
+        f9fff99ff99f99f.....
+        f9f6ffff6ff999fffff.
+        fff66ff666fffff6f66f
+        f.f6f66f66f6f66f.fff
+        .ff6f66f66f6ff6f....
+        .f66f66f66ff.fff....
+        .ff66666666f..ff....
+        .f.fff6666f.........
+        ......ffff..........
+        ....................
+        ....................
+        `, SpriteKind.HealthIcon)
+    opponentHealthIcon = sprites.create(img`
+        . . . f f f . . . . . . f f f . 
+        . . . . f f f . . . . f f f . . 
+        . . . . f c c f f f f f c f . . 
+        . . . . . f f f a a f a f . . . 
+        . . . f f f f f f c f c f . . . 
+        . . . f c f f f 5 f f f f . . . 
+        . f f f a c f f f f f 5 f f . . 
+        . f a f a a c c c c f f f f . . 
+        . f a f a f f f a a c c c f . . 
+        . f a a a f f 1 f f f f f f . . 
+        . f c f a f 1 f 1 f 1 f 1 f . . 
+        . . f a f a f d f d f d f f . . 
+        . . f c f a f f d f f f a f . . 
+        . . f f a a a f f f a c c f . . 
+        . . . f c c c c c c c f f . . . 
+        . . . . f f f f f f f f . . . . 
+        `, SpriteKind.HealthIcon)
     arrowLeft.setPosition(104, 31)
     arrowDown.setPosition(120, 31)
     arrowUp.setPosition(136, 31)
@@ -497,14 +535,17 @@ function SongInitialization () {
     arrowUpP2.setVelocity(0, scrollSpeed)
     arrowRightP2.setVelocity(0, scrollSpeed)
     lateP2.setVelocity(0, scrollSpeed)
+    opponentHealthIcon.setPosition(70, 122)
+    opponentHealthIcon.z = 10
+    opponentHealthIcon.setVelocity(0, scrollSpeed)
     scoreCounterDisplay = textsprite.create("Score:0")
-    scoreCounterDisplay.setPosition(25, 115)
+    scoreCounterDisplay.setPosition(25, 123)
     scoreCounterDisplay.setVelocity(0, scrollSpeed)
     missesCounterDisplay = textsprite.create("Misses:0")
-    missesCounterDisplay.setPosition(83, 115)
+    missesCounterDisplay.setPosition(83, 123)
     missesCounterDisplay.setVelocity(0, scrollSpeed)
     accuracyGradeDisplay = textsprite.create("FC")
-    accuracyGradeDisplay.setPosition(118, 115)
+    accuracyGradeDisplay.setPosition(118, 123)
     accuracyGradeDisplay.setVelocity(0, scrollSpeed)
     levelPlaying = 1
     pause(200)
@@ -795,6 +836,8 @@ let weekWarningPopup = 0
 let accuracyGradeDisplay: TextSprite = null
 let missesCounterDisplay: TextSprite = null
 let scoreCounterDisplay: TextSprite = null
+let opponentHealthIcon: Sprite = null
+let playerHealthIcon: Sprite = null
 let arrowRightP2: Sprite = null
 let arrowUpP2: Sprite = null
 let arrowDownP2: Sprite = null
