@@ -798,22 +798,22 @@ function LevelInitialization () {
         ....................
         `, SpriteKind.HealthIcon)
     opponentHealthIcon = sprites.create(img`
-        . . . f f f . . . . . . f f f . 
-        . . . . f f f . . . . f f f . . 
-        . . . . f a a f f f f f a f . . 
-        . . . . . f f f a a f a f . . . 
-        . . . f f f f f f a f a f . . . 
-        . . . f a f f f 5 f f f f . . . 
-        . f f f a a f f f f f 5 f f . . 
-        . f a f a a a a a a f f f f . . 
-        . f a f a f f f a a a a a f . . 
-        . f c c a f f 1 f f f f f f . . 
-        . f c f c f 1 f 1 f 1 f 1 f . . 
-        . . f c f c f d f d f d f f . . 
-        . . f c f c f f d f f f c f . . 
-        . . f f c c c f f f c c c f . . 
-        . . . f c c c c c c c f f . . . 
-        . . . . f f f f f f f f . . . . 
+        . . . . f f f . . . . . . f f f 
+        . . . . . f f f . . . . f f f . 
+        . . . . . f a a f f f f f a f . 
+        . . . . . . f f f a a f a f . . 
+        . . . . f f f f f f a f a f . . 
+        . . . . f a f f f 5 f f f f . . 
+        . . f f f a a f f f f f 5 f f . 
+        . . f a f a a a a a a f f f f . 
+        . . f a f a f f f a a a a a f . 
+        . . f c c a f f 1 f f f f f f . 
+        . . f c f c f 1 f 1 f 1 f 1 f . 
+        . . . f c f c f d f d f d f f . 
+        . . . f c f c f f d f f f c f . 
+        . . . f f c c c f f f c c c f . 
+        . . . . f c c c c c c c f f . . 
+        . . . . . f f f f f f f f . . . 
         `, SpriteKind.HealthIcon)
     arrowLeft.setPosition(104, 31)
     arrowDown.setPosition(120, 31)
