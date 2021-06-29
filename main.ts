@@ -168,6 +168,9 @@ function StartMenu () {
     toggleFPSCounter = "OFF"
     accuracyGrade = "FC"
     difficulty = 0
+    weekSelected = 0
+    songSelected = 0
+    levelSelection = 0
     blockMenu.showMenu(["Story mode", "Freeplay", "Options", "Credits"], MenuStyle.List, MenuLocation.BottomHalf)
     blockMenu.setColors(1, 15)
 }
@@ -299,7 +302,9 @@ scene.onOverlapTile(SpriteKind.BarrierP2, assets.tile`myTile0`, function (sprite
 blockMenu.onMenuOptionSelected(function (option, index) {
     if (index == 0) {
         if (menu == 0) {
-            game.splash("This feature is", "currently disabled")
+            levelSelection = 1
+            menu = 5
+            blockMenu.showMenu(["Tutorial", "Week 1", "Back"], MenuStyle.List, MenuLocation.BottomHalf)
         } else if (menu == 1) {
             menu = 4
             blockMenu.showMenu(["Easy", "Normal", "Hard", "Back"], MenuStyle.List, MenuLocation.BottomLeft)
@@ -321,12 +326,10 @@ blockMenu.onMenuOptionSelected(function (option, index) {
             game.splash("Not available", "Please play on Hard")
         } else if (menu == 5) {
             game.splash("Not available yet", "Coming soon")
-        } else if (menu == 6) {
-            difficulty = 1
-            game.splash("Not available", "Please play on Hard")
         }
     } else if (index == 1) {
         if (menu == 0) {
+            levelSelection = 2
             menu = 1
             blockMenu.showMenu(["test_0", "Back"], MenuStyle.List, MenuLocation.BottomHalf)
         } else if (menu == 1) {
@@ -349,11 +352,9 @@ blockMenu.onMenuOptionSelected(function (option, index) {
             difficulty = 2
             game.splash("Not available", "Please play on Hard")
         } else if (menu == 5) {
-            menu = 6
+            weekSelected = 1
+            menu = 4
             blockMenu.showMenu(["Easy", "Normal", "Hard", "Back"], MenuStyle.List, MenuLocation.BottomLeft)
-        } else if (menu == 6) {
-            difficulty = 2
-            game.splash("Not available", "Please play on Hard")
         }
     } else if (index == 2) {
         if (menu == 0) {
@@ -376,24 +377,26 @@ blockMenu.onMenuOptionSelected(function (option, index) {
                 blockMenu.setSelectedIndex(2)
             }
         } else if (menu == 4) {
-            difficulty = 3
-            song = 1
-            levelPlaying = 1
-            blockMenu.setControlsEnabled(false)
-            blockMenu.closeMenu()
-            LevelInitialization()
+            if (levelSelection == 1) {
+                weekWarningPopup = 1
+                difficulty = 3
+                song = 1
+                levelPlaying = 1
+                blockMenu.setControlsEnabled(false)
+                blockMenu.closeMenu()
+                LevelInitialization()
+            } else if (levelSelection == 2) {
+                difficulty = 3
+                song = 1
+                levelPlaying = 1
+                blockMenu.setControlsEnabled(false)
+                blockMenu.closeMenu()
+                LevelInitialization()
+            }
         } else if (menu == 5) {
             menu = 0
             blockMenu.showMenu(["Story mode", "Freeplay", "Options", "Credits"], MenuStyle.List, MenuLocation.BottomHalf)
             blockMenu.setSelectedIndex(0)
-        } else if (menu == 6) {
-            weekWarningPopup = 1
-            difficulty = 3
-            song = 1
-            levelPlaying = 1
-            blockMenu.setControlsEnabled(false)
-            blockMenu.closeMenu()
-            LevelInitialization()
         }
     } else if (index == 3) {
         if (menu == 0) {
@@ -402,12 +405,19 @@ blockMenu.onMenuOptionSelected(function (option, index) {
             menu = 2
             blockMenu.showMenu(["Preferences", "Controls", "Back"], MenuStyle.List, MenuLocation.BottomHalf)
         } else if (menu == 4) {
-            menu = 1
-            blockMenu.showMenu(["test_0", "Back"], MenuStyle.List, MenuLocation.BottomHalf)
-        } else if (menu == 6) {
-            menu = 5
-            blockMenu.showMenu(["Tutorial", "Week 1", "Back"], MenuStyle.List, MenuLocation.BottomHalf)
-            blockMenu.setSelectedIndex(1)
+            if (levelSelection == 1) {
+                menu = 5
+                blockMenu.showMenu(["Tutorial", "Week 1", "Back"], MenuStyle.List, MenuLocation.BottomHalf)
+                if (weekSelected == 1) {
+                    blockMenu.setSelectedIndex(1)
+                }
+            } else if (levelSelection == 2) {
+                menu = 1
+                blockMenu.showMenu(["test_0", "Back"], MenuStyle.List, MenuLocation.BottomHalf)
+                if (songSelected == 1) {
+                    blockMenu.setSelectedIndex(0)
+                }
+            }
         }
     }
 })
@@ -876,6 +886,9 @@ let late: Sprite = null
 let statusHealth = 0
 let song = 0
 let arrowUp: Sprite = null
+let levelSelection = 0
+let songSelected = 0
+let weekSelected = 0
 let difficulty = 0
 let accuracyGrade = ""
 let toggleFPSCounter = ""
@@ -944,6 +957,7 @@ game.onUpdateInterval(20, function () {
             game.splash("You failed", "Press A to restart")
             LevelRestart()
         }
+        console.logValue("accuracy", Math.round(accuracy))
     }
 })
 forever(function () {
