@@ -790,7 +790,7 @@ function LevelInitialization () {
         f99ff99ff99f66f.....
         f9f6ffff6ff666fffff.
         fff66ff666fffff9f66f
-        f.f6f66f66f9f99f.fff
+        ..f6f66f66f9f99f.fff
         ..f6f66f66f9ff9f....
         ..f66666666f.fff....
         ...ffffffff...ff....
@@ -861,7 +861,7 @@ function LevelInitialization () {
     levelPlaying = 1
     pause(200)
     if (weekWarningPopup == 1) {
-        game.splash("Week 1 is still not ready.", "Only \"test_0\" will be played")
+        game.splash("Week 1 is still not ready.", "Only test_0 will be played")
     }
 }
 let missesCounter = ""
