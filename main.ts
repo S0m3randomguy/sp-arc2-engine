@@ -160,6 +160,7 @@ scene.onOverlapTile(SpriteKind.BarrierP2, assets.tile`myTile1`, function (sprite
     tiles.setTileAt(location, assets.tile`transparency16`)
 })
 function StartMenu () {
+    scene.setBackgroundColor(5)
     levelPlaying = 0
     menu = 0
     weekWarningPopup = 0
@@ -172,7 +173,7 @@ function StartMenu () {
     songSelected = 0
     levelSelection = 0
     blockMenu.showMenu(["Story mode", "Freeplay", "Options", "Credits"], MenuStyle.List, MenuLocation.BottomHalf)
-    blockMenu.setColors(1, 15)
+    blockMenu.setColors(15, 0)
 }
 controller.up.onEvent(ControllerButtonEvent.Released, function () {
     ReleaseUp()
@@ -307,18 +308,18 @@ blockMenu.onMenuOptionSelected(function (option, index) {
             blockMenu.showMenu(["Tutorial", "Week 1", "Back"], MenuStyle.List, MenuLocation.BottomHalf)
         } else if (menu == 1) {
             menu = 4
-            blockMenu.showMenu(["Easy", "Normal", "Hard", "Back"], MenuStyle.List, MenuLocation.BottomLeft)
+            blockMenu.showMenu(["Easy", "Normal", "Hard", "Back"], MenuStyle.List, MenuLocation.BottomHalf)
         } else if (menu == 2) {
             menu = 3
-            blockMenu.showMenu(["Downscroll: " + toggleDownscroll, "Flashing menu: " + toggleFlashingMenu, "FPS Counter: " + toggleFPSCounter, "Back"], MenuStyle.List, MenuLocation.BottomHalf)
+            blockMenu.showMenu(["Downscroll: " + toggleDownscroll, "Flashing menu: " + toggleFlashingMenu, "FPS Counter: " + toggleFPSCounter, "Anti-Mash: " + "ON", "Back"], MenuStyle.List, MenuLocation.BottomHalf)
         } else if (menu == 3) {
             if (toggleDownscroll == "OFF") {
                 toggleDownscroll = "ON"
-                blockMenu.showMenu(["Downscroll: " + toggleDownscroll, "Flashing menu: " + toggleFlashingMenu, "FPS Counter: " + toggleFPSCounter, "Back"], MenuStyle.List, MenuLocation.BottomHalf)
+                blockMenu.showMenu(["Downscroll: " + toggleDownscroll, "Flashing menu: " + toggleFlashingMenu, "FPS Counter: " + toggleFPSCounter, "Anti-Mash: " + "ON", "Back"], MenuStyle.List, MenuLocation.BottomHalf)
                 blockMenu.setSelectedIndex(0)
             } else if (toggleDownscroll == "ON") {
                 toggleDownscroll = "OFF"
-                blockMenu.showMenu(["Downscroll: " + toggleDownscroll, "Flashing menu: " + toggleFlashingMenu, "FPS Counter: " + toggleFPSCounter, "Back"], MenuStyle.List, MenuLocation.BottomHalf)
+                blockMenu.showMenu(["Downscroll: " + toggleDownscroll, "Flashing menu: " + toggleFlashingMenu, "FPS Counter: " + toggleFPSCounter, "Anti-Mash: " + "ON", "Back"], MenuStyle.List, MenuLocation.BottomHalf)
                 blockMenu.setSelectedIndex(0)
             }
         } else if (menu == 4) {
@@ -341,11 +342,11 @@ blockMenu.onMenuOptionSelected(function (option, index) {
         } else if (menu == 3) {
             if (toggleFlashingMenu == "OFF") {
                 toggleFlashingMenu = "ON"
-                blockMenu.showMenu(["Downscroll: " + toggleDownscroll, "Flashing menu: " + toggleFlashingMenu, "FPS Counter: " + toggleFPSCounter, "Back"], MenuStyle.List, MenuLocation.BottomHalf)
+                blockMenu.showMenu(["Downscroll: " + toggleDownscroll, "Flashing menu: " + toggleFlashingMenu, "FPS Counter: " + toggleFPSCounter, "Anti-Mash: " + "ON", "Back"], MenuStyle.List, MenuLocation.BottomHalf)
                 blockMenu.setSelectedIndex(1)
             } else if (toggleFlashingMenu == "ON") {
                 toggleFlashingMenu = "OFF"
-                blockMenu.showMenu(["Downscroll: " + toggleDownscroll, "Flashing menu: " + toggleFlashingMenu, "FPS Counter: " + toggleFPSCounter, "Back"], MenuStyle.List, MenuLocation.BottomHalf)
+                blockMenu.showMenu(["Downscroll: " + toggleDownscroll, "Flashing menu: " + toggleFlashingMenu, "FPS Counter: " + toggleFPSCounter, "Anti-Mash: " + "ON", "Back"], MenuStyle.List, MenuLocation.BottomHalf)
                 blockMenu.setSelectedIndex(1)
             }
         } else if (menu == 4) {
@@ -354,7 +355,7 @@ blockMenu.onMenuOptionSelected(function (option, index) {
         } else if (menu == 5) {
             weekSelected = 1
             menu = 4
-            blockMenu.showMenu(["Easy", "Normal", "Hard", "Back"], MenuStyle.List, MenuLocation.BottomLeft)
+            blockMenu.showMenu(["Easy", "Normal", "Hard", "Back"], MenuStyle.List, MenuLocation.BottomHalf)
         }
     } else if (index == 2) {
         if (menu == 0) {
@@ -368,12 +369,12 @@ blockMenu.onMenuOptionSelected(function (option, index) {
             if (toggleFPSCounter == "OFF") {
                 toggleFPSCounter = "ON"
                 stats.turnStats(true)
-                blockMenu.showMenu(["Downscroll: " + toggleDownscroll, "Flashing menu: " + "ON", "FPS Counter: " + toggleFPSCounter, "Back"], MenuStyle.List, MenuLocation.BottomHalf)
+                blockMenu.showMenu(["Downscroll: " + toggleDownscroll, "Flashing menu: " + "ON", "FPS Counter: " + toggleFPSCounter, "Anti-Mash: " + "ON", "Back"], MenuStyle.List, MenuLocation.BottomHalf)
                 blockMenu.setSelectedIndex(2)
             } else if (toggleFPSCounter == "ON") {
                 toggleFPSCounter = "OFF"
                 stats.turnStats(false)
-                blockMenu.showMenu(["Downscroll: " + toggleDownscroll, "Flashing menu: " + "ON", "FPS Counter: " + toggleFPSCounter, "Back"], MenuStyle.List, MenuLocation.BottomHalf)
+                blockMenu.showMenu(["Downscroll: " + toggleDownscroll, "Flashing menu: " + "ON", "FPS Counter: " + toggleFPSCounter, "Anti-Mash: " + "ON", "Back"], MenuStyle.List, MenuLocation.BottomHalf)
                 blockMenu.setSelectedIndex(2)
             }
         } else if (menu == 4) {
